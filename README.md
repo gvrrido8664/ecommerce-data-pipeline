@@ -44,7 +44,6 @@ El dashboard final permite monitorear los siguientes indicadores clave (KPIs):
 * `/scripts`: Código en Python para la limpieza y carga de datos.
 * `/sql`: Scripts DDL para la creación de tablas en PostgreSQL.
 * `/dashboard`: Archivo `.pbix` con el informe interactivo de Power BI.
-* `/docs`: Capturas de pantalla del resultado final.
 
 ---
 
