@@ -1,6 +1,3 @@
-# ecommerce-data-pipeline
-Proyecto End-to-End de Ingeniería y Análisis de datos para identificar cuellos de botella en la logística de un E-commerce masivo (100k+ pedidos).
-
 # 📊 Pipeline de Análisis Logístico: E-commerce Olist Brasil
 
 Este proyecto implementa un flujo de datos completo (End-to-End) para analizar el desempeño logístico de más de 100,000 pedidos. El objetivo principal es identificar cuellos de botella geográficos y medir la eficiencia de las entregas mediante KPIs avanzados.
