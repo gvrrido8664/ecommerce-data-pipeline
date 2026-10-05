@@ -28,6 +28,6 @@ python scripts/pipeline.py --raw data/raw --load-sql
 No se leen automáticamente archivos `.env`; `.env.example` muestra el formato. La tabla `hechos_entregas_portafolio` debe ser nueva: una tabla existente produce error, no se reemplaza. Los scripts antiguos delegan al mismo ETL.
 
 ## Decisiones y límites
-Agrego importes e ítems antes de cruzarlos con las órdenes. Valido claves, fechas y relación con clientes. El atraso se calcula con segundos, sin truncar retrasos parciales. Excluyo entregas sin fechas completas; los KPIs describen únicamente las filas válidas entregadas. El promedio de retraso considera solo pedidos atrasados. No se incluye PBIX; la demostración disponible es HTML. La conexión PostgreSQL no se ejecutó en esta revisión; la transformación y exportación sí.
+Agrego importes e ítems antes de cruzarlos con las órdenes. Valido claves, fechas y relación con clientes. El atraso se calcula con segundos, sin truncar retrasos parciales. Excluyo entregas sin fechas completas; los KPIs describen únicamente las filas válidas entregadas. El promedio de retraso considera solo pedidos atrasados. No se incluye PBIX; la demostración disponible es HTML. Se verificó persistencia de cuatro pedidos sintéticos en PostgreSQL 16; no se ejecutó el dataset Olist completo.
 
 English: order-level ETL with validated joins, delivery KPIs and a self-contained synthetic demo. See `demo.py` and `scripts/pipeline.py`.
