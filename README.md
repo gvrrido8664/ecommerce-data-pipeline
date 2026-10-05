@@ -1,55 +1,33 @@
-# 📊 Pipeline de Análisis Logístico: E-commerce Olist Brasil
+# E-commerce: ETL e indicadores de entregas
 
-Este proyecto implementa un flujo de datos completo (End-to-End) para analizar el desempeño logístico de más de 100,000 pedidos. El objetivo principal es identificar cuellos de botella geográficos y medir la eficiencia de las entregas mediante KPIs avanzados.
+Proyecto personal de **Ignacio Garrido**, Ingeniero en Informática titulado. Desarrollo propio de la aplicación; librerías, plantillas, datos e imágenes de terceros conservan su autoría.
 
----
+Transforma órdenes, clientes e ítems en una tabla con **una fila por pedido** para analizar puntualidad de entregas. Python, pandas, SQLAlchemy y PostgreSQL opcional.
 
-## 🚀 Arquitectura del Proyecto
+![Indicadores de la demo sintética](docs/indicadores.png)
 
-El proyecto se divide en tres fases principales que demuestran el dominio de diferentes tecnologías:
+## Ejecutar sin claves ni dataset externo
+Requiere Python 3.12+; comandos desde esta carpeta:
+```powershell
+python -m venv .venv
+.venv/Scripts/python -m pip install -r requirements.txt
+.venv/Scripts/python demo.py
+```
+Abre `demo_output/reporte.html`. Se generan cuatro pedidos ficticios: dos puntuales y dos atrasados. No son resultados comerciales. La demo comprueba pedidos con varios ítems, suma de importes, retrasos inferiores a un día y rechazo de IDs duplicados.
 
-1.  **Extracción y ETL (Python):** Limpieza de datos crudos, manejo de valores nulos y cálculo de métricas de tiempo utilizando `Pandas`. Carga automatizada a base de datos mediante `SQLAlchemy`.
-2.  **Almacenamiento (PostgreSQL):** Persistencia de datos en un entorno relacional para asegurar la integridad y escalabilidad de la información.
-3.  **Inteligencia de Negocios (Power BI):** Modelado de datos (Esquema de Estrella) y visualización interactiva utilizando `DAX`.
+## Fuente externa opcional
+Descarga manualmente el [dataset de Olist](https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce) y revisa sus condiciones de uso. Coloca `olist_orders_dataset.csv`, `olist_order_items_dataset.csv` y `olist_customers_dataset.csv` en `data/raw/`.
+```powershell
+python scripts/pipeline.py --raw data/raw --output data/processed/pedidos.csv
+```
+La carga opcional usa `DATABASE_URL` del entorno:
+```powershell
+$env:DATABASE_URL='postgresql://USUARIO:CONTRASENA@localhost:5432/portafolio'
+python scripts/pipeline.py --raw data/raw --load-sql
+```
+No se leen automáticamente archivos `.env`; `.env.example` muestra el formato. La tabla `hechos_entregas_portafolio` debe ser nueva: una tabla existente produce error, no se reemplaza. Los scripts antiguos delegan al mismo ETL.
 
----
+## Decisiones y límites
+Agrego importes e ítems antes de cruzarlos con las órdenes. Valido claves, fechas y relación con clientes. El atraso se calcula con segundos, sin truncar retrasos parciales. Excluyo entregas sin fechas completas; los KPIs describen únicamente las filas válidas entregadas. El promedio de retraso considera solo pedidos atrasados. No se incluye PBIX; la demostración disponible es HTML. La conexión PostgreSQL no se ejecutó en esta revisión; la transformación y exportación sí.
 
-## 🛠️ Tecnologías Utilizadas
-
-* **Lenguajes:** Python 3.14, SQL, DAX.
-* **Librerías (Python):** Pandas, NumPy, SQLAlchemy, Psycopg2.
-* **Base de Datos:** PostgreSQL / pgAdmin 4.
-* **Visualización:** Power BI Desktop.
-
----
-
-## 📈 Análisis y Dashboard
-
-El dashboard final permite monitorear los siguientes indicadores clave (KPIs):
-
-* **Total de Pedidos:** Volumen histórico de ventas.
-* **% de Entregas a Tiempo:** Tasa de cumplimiento respecto a la fecha estimada.
-* **Promedio de Días de Retraso:** Tiempo excedido en entregas fuera de plazo.
-* **Tendencia Temporal:** Evolución de pedidos mes a mes (Eje cronológico).
-* **Desempeño Geográfico:** Identificación de estados con mayores tiempos de entrega (Ej: Amapá y Pará).
-
-### Desafíos Técnicos Resueltos:
-* **Modelado de Datos:** Implementación de una **Tabla Calendario (Dim_Date)** en DAX para resolver problemas de registros duplicados por marcas de tiempo (timestamp) y permitir filtros únicos por Mes-Año.
-* **Optimización de Consultas:** Normalización de tipos de datos en la carga para mejorar el rendimiento del reporte.
-
----
-
-## 📂 Estructura del Repositorio
-
-* `/scripts`: Código en Python para la limpieza y carga de datos.
-* `/sql`: Scripts DDL para la creación de tablas en PostgreSQL.
-* `/dashboard`: Archivo `.pbix` con el informe interactivo de Power BI.
-
----
-
-## 💡 Conclusión e Insights
-A través de este análisis, se determinó que a pesar de tener un **93% de cumplimiento general**, existen estados específicos cuya logística requiere optimización debido a que superan ampliamente el promedio nacional de 10.5 días de retraso. Este pipeline proporciona una base sólida para la toma de decisiones basada en datos.
-
----
-**Autor:** Ignacio Garrido 
-**Perfil:** Ingeniero en Informática | Graduado de Inacap
+English: order-level ETL with validated joins, delivery KPIs and a self-contained synthetic demo. See `demo.py` and `scripts/pipeline.py`.

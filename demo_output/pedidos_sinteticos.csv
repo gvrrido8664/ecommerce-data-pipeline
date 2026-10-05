@@ -1,0 +1,5 @@
+order_id,customer_id,order_status,order_purchase_timestamp,order_delivered_customer_date,order_estimated_delivery_date,customer_state,item_count,price,freight_value,dias_diferencia,estado_entrega
+DEMO-1,C1,delivered,2026-01-01,2026-01-04 00:00:00,2026-01-05,SP,2,30,5,-1.0,A Tiempo
+DEMO-2,C2,delivered,2026-01-01,2026-01-07 00:00:00,2026-01-05,RJ,1,40,5,2.0,Atrasado
+DEMO-3,C3,delivered,2026-01-01,2026-01-05 12:00:00,2026-01-05,SP,1,50,5,0.5,Atrasado
+DEMO-4,C4,delivered,2026-01-01,2026-01-03 00:00:00,2026-01-05,MG,1,60,6,-2.0,A Tiempo
